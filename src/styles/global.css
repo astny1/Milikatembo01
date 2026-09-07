@@ -1957,6 +1957,51 @@ a:hover {
   color: var(--muted);
 }
 
+.affil-block {
+  max-width: 42rem;
+  margin-top: 1.85rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(14, 61, 58, 0.12);
+}
+
+.affil-block h2 {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.4;
+  color: var(--teal);
+  margin: 0 0 0.85rem;
+}
+
+.affil-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.75rem 2.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.affil-logos li {
+  display: grid;
+  place-items: center;
+  width: 7.25rem;
+  height: 7.25rem;
+}
+
+.affil-logos img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 7.25rem;
+  max-height: 7.25rem;
+  object-fit: contain;
+  object-position: center;
+}
+
 .about-nickie {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
@@ -2884,6 +2929,25 @@ textarea { min-height: 150px; resize: vertical; }
 
   .qual-list li span:last-child {
     text-align: left;
+  }
+
+  .affil-block {
+    margin-top: 1.4rem;
+    padding-top: 1.1rem;
+  }
+
+  .affil-logos {
+    gap: 1.1rem 1.6rem;
+  }
+
+  .affil-logos li {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+
+  .affil-logos img {
+    max-width: 5.5rem;
+    max-height: 5.5rem;
   }
 
   .invite-box {
