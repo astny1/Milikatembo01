@@ -5,6 +5,11 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Form emails cannot be set in this file. After the site is live on Netlify:
+# Project configuration → Notifications → Form submission notifications
+# Add email: 25milikat@gmail.com
+# Apply to forms: speaking-enquiry and footer-enquiry
+
 [[headers]]
   for = "/*"
   [headers.values]

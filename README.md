@@ -19,7 +19,7 @@ Open http://localhost:4321/
 4. Site settings → **Identity**: enable Identity, then enable **Git Gateway**.
 5. Identity → **Invite users**: send an invite to the administrator.
 6. Identity → **Emails**: set the template paths to `/admin/email-templates/invitation.html`, `confirmation.html`, `recovery.html` and `email-change.html`.
-7. Site settings → **Forms**: confirm `speaking-enquiry` is listed after the first deploy. Turn on form notifications to the working email address.
+7. Site settings → **Forms**: after the first deploy you should see `speaking-enquiry` and `footer-enquiry`. Then go to **Project configuration → Notifications → Form submission notifications → Add notification**. Choose **Email**, enter **25milikat@gmail.com**, and apply it to both forms (or all forms). Netlify will email every new enquiry to that address. Confirm the Gmail inbox (and spam) after a test submit.
 8. Visit `https://your-site.netlify.app/admin/` to add blog posts, conferences, publications, ORCID, ResearchGate and a portrait. Use **Account** in the admin panel to change the login email or password.
 
 Change the public email in **Site settings** inside the CMS before sharing the site widely. Update `site` in `astro.config.mjs` when you attach a custom domain.

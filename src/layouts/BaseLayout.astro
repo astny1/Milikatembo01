@@ -38,7 +38,7 @@ const pageTitle = title.includes('Milika') ? title : `${title} | Milika Tembo`;
       email: site.email,
       address: { '@type': 'PostalAddress', addressCountry: site.location },
       affiliation: { '@type': 'Organization', name: site.affiliation },
-      sameAs: [site.linkedin, site.orcid, site.researchgate, site.twitter, site.facebook].filter(Boolean),
+      sameAs: [site.linkedin, site.orcid, site.researchgate, site.twitter, site.facebook, site.youtube].filter(Boolean),
     })} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
