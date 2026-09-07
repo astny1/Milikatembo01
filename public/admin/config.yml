@@ -168,5 +168,6 @@ collections:
           - { label: ResearchGate URL, name: researchgate, widget: string, required: false }
           - { label: X / Twitter URL, name: twitter, widget: string, required: false }
           - { label: Facebook URL, name: facebook, widget: string, required: false }
+          - { label: Instagram URL, name: instagram, widget: string, required: false }
           - { label: YouTube URL, name: youtube, widget: string, required: false }
           - { label: Portrait image, name: portrait, widget: image, required: false }
