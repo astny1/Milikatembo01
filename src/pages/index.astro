@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
-import { formatRange, isUpcoming } from '../lib/dates';
+import { formatRange } from '../lib/dates';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -13,11 +13,17 @@ const homeServices = (await getCollection('services'))
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 3);
 
-const events = (await getCollection('events'))
-  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
-const featured =
-  events.find((event) => event.data.featured && isUpcoming(event.data.date, event.data.endDate)) ??
-  events.find((event) => isUpcoming(event.data.date, event.data.endDate));
+const homeEvents = (await getCollection('events')).map((event) => ({
+  featured: event.data.featured,
+  end: (event.data.endDate ?? event.data.date).toISOString(),
+  eventName: event.data.eventName,
+  summary: event.data.summary,
+  when: formatRange(event.data.date, event.data.endDate),
+  location: event.data.location,
+  role: event.data.role,
+  link: event.data.link || '',
+  linkLabel: event.data.linkLabel || 'Visit the conference website',
+}));
 ---
 
 <BaseLayout
@@ -130,28 +136,70 @@ const featured =
   <section class="home-quote-band" aria-labelledby="feature-heading">
     <div class="home-quote-bg" aria-hidden="true"></div>
     <div class="home-quote-inner">
-      {featured ? (
-        <>
-          <p class="home-kicker">Upcoming engagement</p>
-          <h2 id="feature-heading">{featured.data.eventName}</h2>
-          <p class="home-quote-text">
-            “{featured.data.summary}”
-          </p>
-          <p>{formatRange(featured.data.date, featured.data.endDate)} · {featured.data.location} · {featured.data.role}</p>
-          <div class="home-actions home-center-actions">
-            {featured.data.link && (
-              <a class="btn btn-gold" href={featured.data.link} rel="noopener">{featured.data.linkLabel || 'Visit the conference website'}</a>
-            )}
-            <a class="btn btn-light" href="/events/">View all events</a>
-          </div>
-        </>
-      ) : (
-        <>
-          <h2 id="feature-heading">A quieter kind of conversation</h2>
-          <p class="home-quote-text">“When literature is encountered with intention, the act of reading can become an act of reflection, connection and discovery.”</p>
-        </>
-      )}
+      <div id="home-feature-event" hidden>
+        <p class="home-kicker">Upcoming engagement</p>
+        <h2 id="feature-heading"></h2>
+        <p class="home-quote-text" id="home-feature-summary"></p>
+        <p id="home-feature-meta"></p>
+        <div class="home-actions home-center-actions">
+          <a class="btn btn-gold" id="home-feature-link" href="#" rel="noopener" hidden></a>
+          <a class="btn btn-light" href="/events/">View all events</a>
+        </div>
+      </div>
+      <div id="home-feature-fallback" hidden>
+        <h2 id="feature-fallback-heading">A quieter kind of conversation</h2>
+        <p class="home-quote-text">“When literature is encountered with intention, the act of reading can become an act of reflection, connection and discovery.”</p>
+      </div>
     </div>
+    <script type="application/json" id="home-events-data" set:html={JSON.stringify(homeEvents)} />
+    <script is:inline>
+      (function () {
+        function stillUpcoming(iso) {
+          var end = new Date(iso);
+          end.setHours(0, 0, 0, 0);
+          var today = new Date();
+          today.setHours(0, 0, 0, 0);
+          return end.getTime() >= today.getTime();
+        }
+        var dataEl = document.getElementById('home-events-data');
+        var eventBox = document.getElementById('home-feature-event');
+        var fallback = document.getElementById('home-feature-fallback');
+        if (!dataEl || !eventBox || !fallback) return;
+        var events = [];
+        try {
+          events = JSON.parse(dataEl.textContent || '[]');
+        } catch (err) {
+          events = [];
+        }
+        var live = events.filter(function (item) {
+          return item && item.end && stillUpcoming(item.end);
+        }).sort(function (a, b) {
+          return new Date(a.end).getTime() - new Date(b.end).getTime();
+        });
+        var pick = live.find(function (item) { return item.featured; }) || live[0];
+        if (!pick) {
+          fallback.hidden = false;
+          return;
+        }
+        var title = eventBox.querySelector('#feature-heading');
+        var summary = document.getElementById('home-feature-summary');
+        var meta = document.getElementById('home-feature-meta');
+        var link = document.getElementById('home-feature-link');
+        if (title) title.textContent = pick.eventName || '';
+        if (summary) summary.textContent = pick.summary ? '“' + pick.summary + '”' : '';
+        if (meta) meta.textContent = [pick.when, pick.location, pick.role].filter(Boolean).join(' · ');
+        if (link) {
+          if (pick.link) {
+            link.href = pick.link;
+            link.textContent = pick.linkLabel || 'Visit the conference website';
+            link.hidden = false;
+          } else {
+            link.hidden = true;
+          }
+        }
+        eventBox.hidden = false;
+      })();
+    </script>
   </section>
 
   <section class="home-block home-tint">
