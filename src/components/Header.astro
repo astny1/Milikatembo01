@@ -36,13 +36,13 @@ function current(href: string) {
     <nav class="nav" id="site-nav" aria-label="Primary">
       {items.map((item) =>
         item.children ? (
-          <div class="nav-item has-sub">
+          <div class="nav-item has-sub is-collapsed">
             <div class="nav-parent">
               <a href={item.href} aria-current={current(item.href) ? 'page' : undefined}>{item.label}</a>
               <button
                 class="nav-caret"
                 type="button"
-                aria-expanded="true"
+                aria-expanded="false"
                 aria-controls="research-sub"
                 aria-label="Research sections"
               >
@@ -76,6 +76,10 @@ function current(href: string) {
     const open = nav?.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (!open && submenu && caret) {
+      submenu.classList.add('is-collapsed');
+      caret.setAttribute('aria-expanded', 'false');
+    }
   });
 
   caret?.addEventListener('click', (event) => {

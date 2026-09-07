@@ -235,11 +235,6 @@ a:hover {
   color: var(--accent);
 }
 
-.nav-item:hover .nav-caret svg,
-.nav-item:focus-within .nav-caret svg {
-  transform: rotate(180deg);
-}
-
 .nav-sub {
   display: none;
   position: absolute;
@@ -255,9 +250,16 @@ a:hover {
   z-index: 60;
 }
 
-.nav-item:hover .nav-sub,
-.nav-item:focus-within .nav-sub {
-  display: block;
+@media (min-width: 1101px) {
+  .nav-item:hover .nav-caret svg,
+  .nav-item:focus-within .nav-caret svg {
+    transform: rotate(180deg);
+  }
+
+  .nav-item:hover .nav-sub,
+  .nav-item:focus-within .nav-sub {
+    display: block;
+  }
 }
 
 .nav-sub a {
@@ -2717,6 +2719,8 @@ textarea { min-height: 150px; resize: vertical; }
     width: 42px;
     height: 42px;
     color: var(--teal);
+    position: relative;
+    z-index: 2;
   }
 
   .nav-caret svg {
