@@ -189,7 +189,17 @@ const homeEvents = (await getCollection('events')).map((event) => ({
           var name = pick.eventName || '';
           title.textContent = '';
           if (/\sConference$/.test(name)) {
-            title.appendChild(document.createTextNode(name.replace(/\sConference$/, '')));
+            var head = name.replace(/\sConference$/, '');
+            var european = head.match(/^(3rd European)\s(.+)$/);
+            if (european) {
+              title.appendChild(document.createTextNode(european[1]));
+              var mid = document.createElement('span');
+              mid.className = 'home-feature-break home-feature-break-soft';
+              mid.textContent = european[2];
+              title.appendChild(mid);
+            } else {
+              title.appendChild(document.createTextNode(head));
+            }
             var line = document.createElement('span');
             line.className = 'home-feature-break';
             line.textContent = 'Conference';
@@ -216,7 +226,21 @@ const homeEvents = (await getCollection('events')).map((event) => ({
             }
           });
         }
-        if (meta) meta.textContent = [pick.when, pick.location, pick.role].filter(Boolean).join(' · ');
+        if (meta) {
+          meta.textContent = '';
+          var bits = [pick.when, pick.location, pick.role].filter(Boolean);
+          bits.forEach(function (bit, i) {
+            if (i) {
+              var sep = document.createElement('span');
+              sep.className = 'sep';
+              sep.textContent = ' · ';
+              meta.appendChild(sep);
+            }
+            var part = document.createElement('span');
+            part.textContent = bit;
+            meta.appendChild(part);
+          });
+        }
         if (link) {
           if (pick.link) {
             link.href = pick.link;
