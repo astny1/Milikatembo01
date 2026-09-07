@@ -1,0 +1,219 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { formatRange, isUpcoming } from '../lib/dates';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const homeServices = (await getCollection('services'))
+  .filter((item) => item.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const events = (await getCollection('events'))
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+const featured =
+  events.find((event) => event.data.featured && isUpcoming(event.data.date, event.data.endDate)) ??
+  events.find((event) => isUpcoming(event.data.date, event.data.endDate));
+---
+
+<BaseLayout
+  title="Bibliotherapy | Milika Tembo"
+  description="Milika Tembo is a bibliotherapy researcher, educator and advocate in Zambia. Advancing awareness, research and dialogue on bibliotherapy."
+>
+  <section class="home-hero" aria-label="Introduction">
+    <img
+      class="home-hero-photo"
+      src="/images/hero-portrait.jpg"
+      alt=""
+      width="2560"
+      height="1440"
+    />
+    <div class="home-hero-text">
+      <p class="hero-kicker ac-fade">Milika Tembo, PhD Candidate · Zambia</p>
+      <h1>
+        <span class="hero-title">Bibliotherapy</span>
+        <span class="hero-title-sub">Where Literature Meets Therapy</span>
+        <span class="hero-type">
+          <em id="hero-typed">Researcher</em><span class="hero-caret" aria-hidden="true"></span>
+        </span>
+      </h1>
+      <p class="hero-lead ac-fade ac-fade-d1">Advancing awareness, research and dialogue on bibliotherapy in Zambia.</p>
+      <div class="home-actions home-center-actions">
+        <a class="btn btn-gold" href="#what-is-bibliotherapy">What is bibliotherapy?</a>
+        <a class="btn btn-ghost" href="/contact/">Invite me to speak</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero-sub" aria-label="Professional invitations">
+    <div class="hero-sub-inner">
+      <p class="hero-sub-label">Invitations</p>
+      <ul>
+        <li>
+          <strong>Guest lectures</strong>
+          <span>Clear teaching on bibliotherapy</span>
+        </li>
+        <li>
+          <strong>Conference talks</strong>
+          <span>Papers and session chairing</span>
+        </li>
+        <li>
+          <strong>Awareness sessions</strong>
+          <span>Ethics kept in view</span>
+        </li>
+        <li>
+          <strong>Research</strong>
+          <span>Zambia and unstructured contexts</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="home-block home-tint" id="what-is-bibliotherapy">
+    <div class="home-wide wrap-narrow" style="margin-inline: auto;">
+      <p class="kicker">The subject</p>
+      <h2>What is bibliotherapy?</h2>
+      <p class="home-lead" style="margin-left: 0; text-align: left;">Where Literature Meets Therapy</p>
+      <p>Bibliotherapy is the intentional use of books, stories, poetry and other written materials to support reflection, emotional understanding, personal development and wellbeing. It recognises that literature can do more than inform or entertain: it can help readers interpret experiences, encounter new perspectives and find language for thoughts or emotions that may be difficult to express.</p>
+      <p>The term combines two ideas: <em>biblio</em>, meaning books or literature, and <em>therapy</em>, meaning care or support. Bibliotherapy may therefore be understood as using carefully selected literature within a guided process to encourage insight, conversation and positive personal development.</p>
+      <div class="home-actions">
+        <a class="btn btn-teal" href="/bibliotherapy/">Read more</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-block" id="about-home">
+    <div class="home-wide home-about">
+      <div>
+        <h2>About me</h2>
+        <p><strong>Welcome to a space where literature is treated as a path to reflection, understanding and public conversation about wellbeing.</strong></p>
+        <p>I am Milika Tembo, a librarian, doctoral researcher and advocate working at the meeting point of librarianship, counselling, research and education. I am advancing bibliotherapy as a subject of academic discussion and public awareness in Zambia.</p>
+        <p><strong>What I offer</strong></p>
+        <ul>
+          <li><strong>Guest lectures and conference talks</strong> — clear teaching on what bibliotherapy is, and what it is not, for universities, libraries and professional gatherings.</li>
+          <li><strong>Workshops and awareness sessions</strong> — structured, educational sessions for staff and students, with clear boundaries so the work never becomes unplanned therapy.</li>
+          <li><strong>Research collaboration</strong> — working with departments and organisations exploring how bibliotherapy might be studied and applied.</li>
+        </ul>
+        <div class="home-actions">
+          <a class="btn btn-teal" href="/about/">More about me</a>
+          <a class="btn btn-gold" href="/contact/">Invite me</a>
+        </div>
+      </div>
+      <img class="home-about-photo" src="/images/portrait-studio.jpg" alt="Milika Tembo" />
+    </div>
+  </section>
+
+  <section class="home-block home-tint">
+    <div class="home-wide">
+      <h2 class="home-center">Teaching and engagement</h2>
+      <p class="home-lead">Bringing bibliotherapy into academic, professional, workplace and community conversations through accessible, research-informed learning experiences.</p>
+      <div class="home-services">
+        {homeServices.map((item, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <h3>{item.data.title}</h3>
+            <p>{item.data.summary}</p>
+          </article>
+        ))}
+      </div>
+      <div class="home-actions home-center-actions">
+        <a class="btn btn-teal" href="/teaching/">View services</a>
+        <a class="btn btn-gold" href="/contact/">Invite me</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-quote-band" aria-labelledby="feature-heading">
+    <div class="home-quote-bg" aria-hidden="true"></div>
+    <div class="home-quote-inner">
+      {featured ? (
+        <>
+          <p class="home-kicker">Upcoming engagement</p>
+          <h2 id="feature-heading">{featured.data.eventName}</h2>
+          <p class="home-quote-text">
+            “{featured.data.summary}”
+          </p>
+          <p>{formatRange(featured.data.date, featured.data.endDate)} · {featured.data.location} · {featured.data.role}</p>
+          <div class="home-actions home-center-actions">
+            {featured.data.link && (
+              <a class="btn btn-gold" href={featured.data.link} rel="noopener">{featured.data.linkLabel || 'Visit the conference website'}</a>
+            )}
+            <a class="btn btn-light" href="/events/">View all events</a>
+          </div>
+        </>
+      ) : (
+        <>
+          <h2 id="feature-heading">A quieter kind of conversation</h2>
+          <p class="home-quote-text">“When literature is encountered with intention, the act of reading can become an act of reflection, connection and discovery.”</p>
+        </>
+      )}
+    </div>
+  </section>
+
+  <section class="home-block home-tint">
+    <div class="home-wide">
+      <h2 class="home-center">Recent posts</h2>
+      {posts.length === 0 ? (
+        <p class="home-center page-sub">Coming soon.</p>
+      ) : (
+        <div class="blog-grid">
+          {posts.map((post) => (
+            <PostCard
+              title={post.data.title}
+              description={post.data.description}
+              href={`/blog/${post.slug}/`}
+              category={post.data.category}
+              dateLabel={post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+              image={post.data.image}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var el = document.getElementById("hero-typed");
+      if (!el) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        el.textContent = "Researcher";
+        var caret = document.querySelector(".hero-caret");
+        if (caret) caret.style.display = "none";
+        return;
+      }
+      var lines = ["Researcher", "Educator", "Advocate"];
+      var i = 0;
+      var j = 0;
+      var deleting = false;
+      function tick() {
+        var line = lines[i];
+        el.textContent = line.slice(0, j);
+        if (!deleting && j < line.length) {
+          j += 1;
+          setTimeout(tick, 42);
+          return;
+        }
+        if (!deleting && j === line.length) {
+          deleting = true;
+          setTimeout(tick, 2200);
+          return;
+        }
+        if (deleting && j > 0) {
+          j -= 1;
+          setTimeout(tick, 24);
+          return;
+        }
+        deleting = false;
+        i = (i + 1) % lines.length;
+        setTimeout(tick, 320);
+      }
+      el.textContent = "";
+      setTimeout(tick, 400);
+    })();
+  </script>
+</BaseLayout>

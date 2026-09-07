@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const offerings = (await getCollection('services')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout
+  title="Teaching & Engagement"
+  description="Invite Milika Tembo for a guest lecture, seminar, workshop, wellbeing awareness session, conference talk or online engagement on bibliotherapy."
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <p class="kicker">Services</p>
+      <h1>Teaching &amp; Engagement</h1>
+      <p>Bringing bibliotherapy into academic, professional, workplace and community conversations through accessible, research-informed learning experiences.</p>
+      <p>Universities, colleges, schools, libraries, counselling departments, workplaces, professional organisations, community groups and conference organisers are all welcome to invite me to introduce bibliotherapy, explore its relevance and facilitate meaningful conversations about literature, reflection and wellbeing.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 2rem;">
+    <div class="wrap">
+      <div class="cards">
+        {offerings.map((item) => (
+          <article class="offer-card">
+            <h3>{item.data.title}</h3>
+            <p>{item.data.text}</p>
+          </article>
+        ))}
+      </div>
+      <div class="invite-box">
+        <h2>Request an engagement</h2>
+        <p>Invite me to contribute to your university, library, school, workplace, conference, organisation or professional programme. Please include your proposed dates, intended audience, preferred format and the subject you would like the engagement to address.</p>
+        <a class="btn btn-gold" href="/contact/?type=lecture">Invite me to speak</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+const categories = ['All', 'Bibliotherapy', 'Libraries', 'Literature', 'Wellbeing', 'Research'];
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="Blog"
+  description="Educational articles on bibliotherapy, libraries, literature and wellbeing by Milika Tembo."
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <p class="kicker">Blog</p>
+      <h1>Notes on reading, research and awareness</h1>
+      <p>Short educational articles for readers who want to understand bibliotherapy, the role of libraries, and the relationship between literature and wellbeing.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="wrap">
+      {posts.length === 0 ? (
+        <p class="page-sub">Coming soon.</p>
+      ) : (
+        <>
+          <div class="filters" role="group" aria-label="Blog categories">
+            {categories.map((category) => (
+              <button type="button" data-filter={category} class={category === 'All' ? 'is-active' : undefined}>
+                {category}
+              </button>
+            ))}
+          </div>
+          <div class="blog-grid" id="post-list">
+            {posts.map((post) => (
+              <div data-category={post.data.category}>
+                <PostCard
+                  title={post.data.title}
+                  description={post.data.description}
+                  href={`/blog/${post.slug}/`}
+                  category={post.data.category}
+                  dateLabel={post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  image={post.data.image}
+                />
+              </div>
+            ))}
+          </div>
+          <p class="note" id="empty-filter" hidden>No articles in this category yet.</p>
+        </>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll('[data-filter]');
+  const items = document.querySelectorAll('#post-list > [data-category]');
+  const empty = document.getElementById('empty-filter');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.getAttribute('data-filter');
+      buttons.forEach((item) => item.classList.toggle('is-active', item === button));
+      let visible = 0;
+      items.forEach((item) => {
+        const show = filter === 'All' || item.getAttribute('data-category') === filter;
+        item.toggleAttribute('hidden', !show);
+        if (show) visible += 1;
+      });
+      empty?.toggleAttribute('hidden', visible > 0);
+    });
+  });
+</script>

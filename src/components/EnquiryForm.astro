@@ -1,0 +1,81 @@
+---
+---
+
+<p class="form-success" id="form-success" role="status" hidden>
+  Thank you. Your enquiry has been received. Milika will reply if the request is a good fit for speaking, teaching or research collaboration.
+</p>
+
+<form
+  class="invite-form"
+  name="speaking-enquiry"
+  method="POST"
+  action="/contact/?success=true"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+>
+  <input type="hidden" name="form-name" value="speaking-enquiry" />
+  <p class="honeypot">
+    <label>
+      Do not fill this field
+      <input name="bot-field" tabindex="-1" autocomplete="off" />
+    </label>
+  </p>
+  <div class="invite-form-row">
+    <label>
+      Full name
+      <input type="text" name="name" autocomplete="name" required />
+    </label>
+    <label>
+      Email
+      <input type="email" name="email" autocomplete="email" required />
+    </label>
+  </div>
+  <div class="invite-form-row">
+    <label>
+      Organisation
+      <input type="text" name="organisation" autocomplete="organization" />
+    </label>
+    <label>
+      Country
+      <input type="text" name="country" autocomplete="country-name" />
+    </label>
+  </div>
+  <label>
+    Enquiry type
+    <select name="enquiry-type" id="enquiry-type" required>
+      <option value="" disabled selected>Select one</option>
+      <option value="Guest lecture" data-type="lecture">Guest lecture</option>
+      <option value="Workshop">Workshop</option>
+      <option value="Seminar">Seminar</option>
+      <option value="Panel discussion">Panel discussion</option>
+      <option value="Conference talk">Conference talk</option>
+      <option value="Wellbeing awareness session">Wellbeing awareness session</option>
+      <option value="Research collaboration">Research collaboration</option>
+      <option value="Media enquiry">Media enquiry</option>
+      <option value="Other">Other professional enquiry</option>
+    </select>
+  </label>
+  <label>
+    Message
+    <textarea name="message" required placeholder="Please include dates, audience, format (in person or online) and anything else that would help."></textarea>
+  </label>
+  <p class="note">This form is for speaking, teaching and collaboration. It is not a request for counselling, diagnosis or a bibliotherapy treatment session.</p>
+  <button class="btn btn-gold" type="submit">Send enquiry</button>
+</form>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('success') === 'true') {
+    document.getElementById('form-success')?.removeAttribute('hidden');
+  }
+  const type = params.get('type');
+  const select = document.getElementById('enquiry-type');
+  if (type && select instanceof HTMLSelectElement) {
+    const match = [...select.options].find(
+      (option) => option.dataset.type === type || option.value.toLowerCase().includes(type.toLowerCase())
+    );
+    if (match) {
+      select.value = match.value;
+    }
+  }
+</script>

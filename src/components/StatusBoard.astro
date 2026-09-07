@@ -1,0 +1,51 @@
+---
+interface StatusItem {
+  title: string;
+  meta?: string;
+  text: string;
+  link?: string;
+  linkLabel?: string;
+}
+
+interface Props {
+  complete?: StatusItem[];
+  working?: StatusItem[];
+  upcoming?: StatusItem[];
+}
+
+const { complete = [], working = [], upcoming = [] } = Astro.props;
+
+const groups = [
+  { key: 'complete', label: 'Complete', items: complete },
+  { key: 'working', label: 'Working on', items: working },
+  { key: 'upcoming', label: 'Upcoming', items: upcoming },
+];
+---
+
+<div class="status-board">
+  {groups.map((group) => (
+    <section class="status-group" aria-labelledby={`${group.key}-heading`}>
+      <h2 id={`${group.key}-heading`}>{group.label}</h2>
+      {group.items.length === 0 ? (
+        <p class="status-empty">Nothing listed here yet.</p>
+      ) : (
+        <div class="research-list">
+          {group.items.map((item) => (
+            <article class="research-item">
+              {item.meta && <p class="category">{item.meta}</p>}
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+              {item.link && (
+                <p>
+                  <a href={item.link} rel={item.link.startsWith('http') ? 'noopener' : undefined}>
+                    {item.linkLabel || 'View details'}
+                  </a>
+                </p>
+              )}
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+  ))}
+</div>

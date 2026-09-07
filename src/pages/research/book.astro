@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const items = (await getCollection('book')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Book Project"
+  description="A book project in development alongside Milika Tembo’s doctoral research on bibliotherapy."
+>
+  <header class="page-hero research-hero">
+    <div class="wrap">
+      <h1>Book Project</h1>
+      {items.length === 0 && <p class="page-sub">Coming soon.</p>}
+    </div>
+  </header>
+
+  {items.length > 0 && (
+    <section class="section">
+      <div class="wrap cards">
+        {items.map((item) => (
+          <article class="research-item">
+            {item.data.meta && <p class="category">{item.data.meta}</p>}
+            <h3>{item.data.title}</h3>
+            <p>{item.data.summary}</p>
+            {item.data.link && (
+              <p>
+                <a href={item.data.link} rel="noopener">
+                  {item.data.linkLabel || 'Read more'}
+                </a>
+              </p>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+</BaseLayout>

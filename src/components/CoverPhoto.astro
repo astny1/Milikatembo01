@@ -1,0 +1,10 @@
+---
+interface Props {
+  src: string;
+  position?: string;
+}
+
+const { src, position = '50% 25%' } = Astro.props;
+---
+
+<img class="cover-photo" src={src} alt="" style={`object-position: ${position}`} />

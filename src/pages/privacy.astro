@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+---
+
+<BaseLayout
+  title="Privacy policy"
+  description="How the Milika Tembo bibliotherapy website collects, uses and protects personal information from visitors and enquiry forms."
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <p class="kicker">Legal</p>
+      <h1>Privacy policy</h1>
+      <p>This policy explains what personal information the website collects, why it is collected, how it is protected, and the limited use of cookies.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="wrap-narrow prose">
+      <p>The website is operated by {site.name}, {site.location}. For privacy questions, write to <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+
+      <h2>What is collected</h2>
+      <p>If you only browse, the site does not ask you to create an account. The hosting provider, Netlify, may process technical data such as IP address, browser type and pages requested in server logs, in order to deliver and secure the site.</p>
+      <p>If you send the speaking or collaboration form, the following is collected: name, email address, organisation, country, enquiry type and message. A hidden field is used only as spam protection and should be left empty.</p>
+
+      <h2>Why it is collected</h2>
+      <p>Form information is used solely to respond to professional enquiries — teaching, speaking, media or research collaboration. It is not used to offer counselling or to build a marketing list. Technical logs are used to keep the site available and reasonably secure.</p>
+
+      <h2>How it is protected and stored</h2>
+      <p>Form submissions are processed by Netlify and stored in the site’s Netlify account. Access should be limited to people who manage the website. Messages are kept only as long as needed to answer the enquiry and maintain a basic professional record, then deleted.</p>
+      <p>The content-management area at <code>/admin/</code> is protected by Netlify Identity and is for authorised editors only.</p>
+
+      <h2>Cookies</h2>
+      <p>The public pages do not rely on advertising cookies. Essential cookies or local storage may be used by the host for security, form handling and, for editors only, signing in to the CMS. If analytics are added later, this policy will be updated before any non-essential cookies are used.</p>
+
+      <h2>Sharing</h2>
+      <p>Personal information is not sold. It may be processed by Netlify as a service provider, and it may be disclosed if required by law. If an enquiry names a third-party institution, that context is used only to understand the request.</p>
+
+      <h2>Your rights</h2>
+      <p>You may ask what information is held about you, request correction or deletion, or withdraw a pending enquiry by emailing the address above. If you are in a region with additional data-protection rights, those rights will be respected to the extent applicable.</p>
+
+      <h2>Children</h2>
+      <p>The site is intended for adult professional visitors. It does not knowingly collect personal information from children.</p>
+
+      <h2>Changes</h2>
+      <p>This policy may be updated as the website or its hosting arrangements change. The heading date of a revised policy will be the effective date. Last updated: 4 September 2026.</p>
+    </div>
+  </section>
+</BaseLayout>

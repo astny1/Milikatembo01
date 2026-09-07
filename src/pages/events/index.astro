@@ -1,0 +1,132 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatRange } from '../../lib/dates';
+import { eventIsoEnd, eventPhoto, splitEvents } from '../../lib/events';
+
+const events = await getCollection('events');
+const { upcoming, past, recentPast } = splitEvents(events);
+---
+
+<BaseLayout
+  title="Events"
+  description="Upcoming lectures, conferences, workshops and speaking engagements with Milika Tembo. New events can be added from the website admin."
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <p class="kicker">Events</p>
+      <h1>Upcoming engagements</h1>
+      <p>Conferences, guest lectures, workshops and awareness sessions. New dates are added here as they are confirmed.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="wrap">
+      <p class="page-sub" id="upcoming-empty" hidden={upcoming.length > 0}>Coming soon.</p>
+      <div class="event-list" id="upcoming-list">
+        {upcoming.map((event) => (
+          <article
+            class="event-card-media"
+            data-event-id={event.slug}
+            data-end={eventIsoEnd(event)}
+            data-featured={event.data.featured ? 'true' : undefined}
+          >
+            <img class="event-card-photo" src={eventPhoto(event)} alt="" width="400" height="500" />
+            <div class="event-card-copy">
+              <p class="category">{event.data.type} · {event.data.role}</p>
+              <h2>{event.data.title}</h2>
+              <p class="event-card-name">{event.data.eventName}</p>
+              <p class="post-meta">{formatRange(event.data.date, event.data.endDate)} · {event.data.location}</p>
+              <p class="event-card-summary">{event.data.summary}</p>
+              <div class="event-card-actions">
+                {event.data.link && (
+                  <a class="btn btn-gold" href={event.data.link} rel="noopener">
+                    {event.data.linkLabel || 'View details'}
+                  </a>
+                )}
+                <a class="btn btn-outline" href="/contact/">Invite me</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="past-section" style="padding-top: 0;" hidden={past.length === 0}>
+    <div class="wrap">
+      <p class="kicker">Archive</p>
+      <h2>Past events</h2>
+      <p class="event-past-lead">The three most recent appearances. The full list is on its own page.</p>
+      <div class="event-past-grid" id="recent-past">
+        {recentPast.map((event) => (
+          <article
+            class="event-card-media event-card-past"
+            data-event-id={event.slug}
+            data-end={eventIsoEnd(event)}
+          >
+            <img class="event-card-photo" src={eventPhoto(event)} alt="" width="400" height="500" />
+            <div class="event-card-copy">
+              <p class="category">{event.data.type} · {event.data.role}</p>
+              <h3>{event.data.title}</h3>
+              <p class="event-card-name">{event.data.eventName}</p>
+              <p class="post-meta">{formatRange(event.data.date, event.data.endDate)}</p>
+              <p class="event-card-place">{event.data.location}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="event-see-all" id="see-all-wrap" hidden={past.length === 0}>
+        <a class="btn btn-teal" href="/events/all/">See all</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  function dayStart(value: string) {
+    const date = new Date(value);
+    date.setHours(0, 0, 0, 0);
+    return date.getTime();
+  }
+
+  function stillUpcoming(el: Element) {
+    const end = el.getAttribute('data-end');
+    if (!end) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return dayStart(end) >= today.getTime();
+  }
+
+  const upcomingList = document.getElementById('upcoming-list');
+  const recentPast = document.getElementById('recent-past');
+  const upcomingEmpty = document.getElementById('upcoming-empty');
+  const pastSection = document.getElementById('past-section');
+  const seeAllWrap = document.getElementById('see-all-wrap');
+
+  if (upcomingList && recentPast) {
+    const cards = [...document.querySelectorAll<HTMLElement>('.event-card-media')];
+    const upcomingCards = cards
+      .filter((card) => stillUpcoming(card))
+      .sort((a, b) => dayStart(a.dataset.end || '') - dayStart(b.dataset.end || ''));
+    const pastCards = cards
+      .filter((card) => !stillUpcoming(card))
+      .sort((a, b) => dayStart(b.dataset.end || '') - dayStart(a.dataset.end || ''));
+
+    upcomingCards.forEach((card) => {
+      card.hidden = false;
+      card.classList.remove('event-card-past');
+      upcomingList.appendChild(card);
+    });
+
+    pastCards.forEach((card, index) => {
+      card.classList.add('event-card-past');
+      card.hidden = index >= 3;
+      recentPast.appendChild(card);
+    });
+
+    if (upcomingEmpty) upcomingEmpty.hidden = upcomingCards.length > 0;
+    if (pastSection) pastSection.hidden = pastCards.length === 0;
+    if (seeAllWrap) seeAllWrap.hidden = pastCards.length === 0;
+  }
+</script>

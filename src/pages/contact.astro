@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import site from '../data/site.json';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Invite Milika Tembo to speak, teach or collaborate on bibliotherapy research, guest lectures, workshops and institutional awareness sessions."
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <p class="kicker">Invite me</p>
+      <h1>Invite me to speak</h1>
+      <p>The main invitation is professional: guest lectures, workshops, panel discussions, conference talks and research collaboration. This is not a counselling inbox.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="wrap invite-page">
+      <div>
+        <h2 class="invite-form-title">Enquiry form</h2>
+        <EnquiryForm />
+      </div>
+      <aside class="contact-card">
+        <p class="category">Direct contact</p>
+        <div class="contact-card-head">
+          <img src={site.portrait} alt="" width="72" height="72" />
+          <div>
+            <h3>{site.name}</h3>
+            <p class="contact-card-role">{site.credentials}</p>
+          </div>
+        </div>
+        <dl class="contact-card-list">
+          <div>
+            <dt>Email</dt>
+            <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+          </div>
+          <div>
+            <dt>Based in</dt>
+            <dd>{site.location}</dd>
+          </div>
+        </dl>
+        <div class="contact-card-foot">
+          <a
+            class="contact-icon"
+            href="https://www.linkedin.com/in/milika-tembo-0b277b122"
+            target="_blank"
+            rel="me noopener noreferrer"
+            aria-label="LinkedIn"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8.25h4.52V24H.24V8.25zM8.24 8.25h4.33v2.14h.06c.6-1.14 2.08-2.34 4.28-2.34 4.58 0 5.43 3.01 5.43 6.93V24h-4.52v-7.84c0-1.87-.03-4.28-2.61-4.28-2.61 0-3.01 2.04-3.01 4.14V24H8.24V8.25z" />
+            </svg>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

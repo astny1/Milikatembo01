@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+---
+
+<BaseLayout
+  title="About"
+  description="Meet Milika Tembo, a Zambia-based bibliotherapy researcher, educator and advocate working at the meeting point of librarianship, counselling, research and education."
+>
+  <header class="page-hero page-hero-about">
+    <div class="wrap">
+      <h1>About me</h1>
+      <p>Where literature meets therapy, reading assumes a purpose beyond information and entertainment.</p>
+    </div>
+  </header>
+  <section class="section">
+    <div class="wrap split split-about">
+      <div class="prose">
+        <p>It becomes a space for reflection, emotional expression, meaning-making and human connection. This understanding lies at the centre of my professional and academic journey.</p>
+        <p>Zambia is not a country without readers. People engage with literature in classrooms, libraries, religious spaces, book clubs, digital platforms and everyday life. The opportunity, therefore, is not simply to promote a reading culture, but to broaden how reading is understood and intentionally used. Bibliotherapy allows literature to be recognised as a valuable resource for reflection, dialogue and mental wellbeing.</p>
+        <p>My aim is to advance awareness, research and dialogue on bibliotherapy in Zambia and to make it more visible as a counselling intervention that can complement existing mental-health promotion and prevention efforts. Despite the interventions already in place, individuals and communities continue to experience considerable psychological and emotional distress. Bibliotherapy deserves a clearer place within conversations about responsive and accessible approaches to wellbeing.</p>
+        <p>This website does not offer counselling, diagnosis or treatment, and it does not invite anyone to book a therapy session.</p>
+        <p><a class="btn btn-gold" href="/contact/">Invite me</a></p>
+      </div>
+      <img class="home-about-photo" src="/images/portrait-studio.jpg" alt="Milika Tembo" />
+    </div>
+  </section>
+
+  <section class="section-quals">
+    <div class="wrap">
+      <div class="qual-block">
+        <h2>Qualifications</h2>
+        <ul class="qual-list">
+          <li>
+            <span>Doctor of Philosophy candidate, bibliotherapy</span>
+            <span>University of Zambia</span>
+          </li>
+          <li>
+            <span>Master of Science in Counselling</span>
+            <span>University of Zambia</span>
+          </li>
+          <li>
+            <span>Master of Arts in Human Resource Management</span>
+            <span>Copperbelt University</span>
+          </li>
+          <li>
+            <span>Bachelor of Library and Information Studies</span>
+            <span>University of Zambia</span>
+          </li>
+          <li>
+            <span>Diploma in Technical and Vocational Teaching</span>
+            <span>Evelyn Hone College</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="wrap split split-about">
+      <div class="prose">
+        <h2>A shared conversation</h2>
+        <p>Literature scholars, librarians, mental-health practitioners, educators and book lovers all have a place in this conversation. Their combined knowledge and experience can help explore how literature may be used responsibly to encourage reflection, strengthen emotional awareness and support mental wellness.</p>
+        <p>My vision is for bibliotherapy to become a recognised, ethically grounded and culturally responsive area of knowledge and practice in Zambia. I envision universities, libraries, counselling services and other institutions engaging with its possibilities through research, education, professional collaboration and carefully developed interventions.</p>
+        <p>By connecting Zambia’s reading culture and local experiences with the wider international bibliotherapy conversation, I hope to contribute to a future in which the country does not merely encounter bibliotherapy, but participates meaningfully in shaping how it is understood and developed.</p>
+      </div>
+      <aside class="card">
+        <p class="category">Based in</p>
+        <h3>{site.location}</h3>
+        <p>{site.credentials}. Available for in-person and online teaching, speaking and research conversations with universities, libraries, conferences and organisations.</p>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

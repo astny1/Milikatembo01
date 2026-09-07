@@ -1,0 +1,138 @@
+img[src*="portrait-studio"] {
+  width: 88px !important;
+  height: 88px !important;
+  max-height: none !important;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 50%;
+}
+
+[class*="Login"] img[src*="portrait-studio"] {
+  width: 160px !important;
+  height: 160px !important;
+}
+
+.account-launch {
+  position: fixed;
+  top: 1rem;
+  right: 5.5rem;
+  z-index: 1000;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  background: #0e3d3a;
+  color: #fff;
+  font: 600 0.85rem/1 "Source Sans 3", "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+
+.account-panel {
+  max-width: 36rem;
+  padding: 1.5rem 0 3rem;
+}
+
+.account-panel h1,
+.account-overlay h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.8rem;
+}
+
+.account-lead,
+.account-card p,
+.account-alt {
+  color: #44514d;
+}
+
+.account-card {
+  margin-top: 1.4rem;
+  padding: 1.2rem 1.3rem 1.4rem;
+  border: 1px solid #e4dccb;
+  border-radius: 14px;
+  background: #fffcf7;
+}
+
+.account-card h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+}
+
+.account-card label {
+  display: block;
+  margin: 0.9rem 0 0;
+  font-weight: 600;
+}
+
+.account-card input {
+  display: block;
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #cfc6b4;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.account-btn,
+.account-link {
+  margin-top: 1rem;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.65rem 1.15rem;
+  background: #0e3d3a;
+  color: #fff;
+  font: 600 0.95rem/1 "Source Sans 3", "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+
+.account-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.account-link {
+  background: transparent;
+  color: #0e3d3a;
+  padding-left: 0;
+}
+
+.account-ok {
+  color: #0e3d3a;
+  font-weight: 600;
+}
+
+.account-error {
+  color: #8a3b32;
+  font-weight: 600;
+}
+
+.account-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  place-items: center;
+  padding: 1.5rem;
+  background: rgba(8, 40, 36, 0.45);
+}
+
+.account-overlay.is-open {
+  display: grid;
+}
+
+.account-overlay-card {
+  width: min(36rem, 100%);
+  max-height: min(90vh, 52rem);
+  overflow: auto;
+  padding: 1.4rem 1.5rem 1.6rem;
+  border-radius: 16px;
+  background: #fbf8f2;
+}
+
+.account-close {
+  float: right;
+  border: 0;
+  background: transparent;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}

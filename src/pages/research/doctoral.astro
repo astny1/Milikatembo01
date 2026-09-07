@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import doctoral from '../../data/doctoral.json';
+
+const link = doctoral.link?.trim();
+---
+
+<BaseLayout
+  title="Doctoral Project"
+  description="Milika Tembo’s doctoral research on bibliotherapy as a mental-health counselling intervention among university students in Zambia."
+>
+  <header class="page-hero research-hero">
+    <div class="wrap">
+      <h1>Doctoral Project</h1>
+      <p class="page-sub">Exploring bibliotherapy as a mental-health counselling intervention among university students in Zambia.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap-narrow prose">
+      <h2>Exploring Bibliotherapy as a Mental Health Counselling Interventional Mechanism at a Selected University in Zambia: A Hermeneutic Phenomenological Approach</h2>
+      <p class="category">Abstract</p>
+      <p>University students in sub-Saharan Africa face a rising burden of mental health difficulties, yet counselling services remain under-resourced and dominated by conventional talk-based approaches. Bibliotherapy, the guided use of reading materials for therapeutic purposes, offers a low-cost, culturally adaptable complement to existing services, but its practice in African university settings remains poorly understood. This study explored the lived experiences of students, counsellors and librarians who engaged with bibliotherapy as a mental health counselling intervention at a selected university in Zambia.</p>
+      <p>The study pursued four objectives: to explore the lived experiences of students who used bibliotherapy as a counselling intervention; to establish the counselling issues for which bibliotherapy was employed; to examine how students benefited from bibliotherapy as a counselling intervention; and to propose a framework through which bibliotherapy as a counselling intervention could be enhanced.</p>
+      <p>Anchored in an interpretivist paradigm, the study adopted a hermeneutic phenomenological design informed by Van Manen’s four lifeworld existentials of lived body, lived space, lived time and lived human relations. Participants were recruited through expert purposive and snowball sampling and comprised students who had used bibliotherapy together with counsellors and librarians involved in its delivery. Data were generated through semi-structured interviews and field notes and were analysed using Interpretative Phenomenological Analysis. Ethical clearance was granted by the Humanities and Social Sciences Research Ethics Committee.</p>
+      <p>The findings illuminated the meanings participants attached to reading as a therapeutic encounter, the range of psychosocial concerns bibliotherapy addressed, and the emotional, cognitive and relational benefits students reported. Drawing on these insights, the study proposed a contextually grounded framework for enhancing bibliotherapy through structured collaboration among counsellors, librarians and literary scholars. The study contributes to the limited African scholarship on bibliotherapy and offers practical direction for integrating reading-based interventions into university counselling services.</p>
+      <p><strong>Keywords:</strong> bibliotherapy; mental health counselling; university students; hermeneutic phenomenology; lived experience; Zambia.</p>
+      {link && (
+        <p><a class="btn btn-gold" href={link} rel="noopener">View research</a></p>
+      )}
+    </div>
+  </section>
+</BaseLayout>

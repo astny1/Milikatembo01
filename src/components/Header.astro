@@ -1,0 +1,87 @@
+---
+const path = Astro.url.pathname;
+const items = [
+  { href: '/', label: 'Home' },
+  { href: '/about/', label: 'About me' },
+  { href: '/bibliotherapy/', label: 'Bibliotherapy' },
+  { href: '/teaching/', label: 'Services' },
+  {
+    href: '/research/',
+    label: 'Research',
+    children: [
+      { href: '/research/doctoral/', label: 'Doctoral' },
+      { href: '/research/book/', label: 'Book' },
+      { href: '/research/publications/', label: 'Publications' },
+      { href: '/research/conferences/', label: 'Conferences' },
+    ],
+  },
+  { href: '/events/', label: 'Events' },
+  { href: '/blog/', label: 'Blog' },
+];
+
+function current(href: string) {
+  if (href === '/') return path === '/';
+  return path.startsWith(href);
+}
+---
+
+<header class="site-header">
+  <div class="home-wide header-inner">
+    <a class="wordmark" href="/">
+      <span class="wordmark-name">Milika Tembo</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span></span>
+    </button>
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      {items.map((item) =>
+        item.children ? (
+          <div class="nav-item has-sub">
+            <div class="nav-parent">
+              <a href={item.href} aria-current={current(item.href) ? 'page' : undefined}>{item.label}</a>
+              <button
+                class="nav-caret"
+                type="button"
+                aria-expanded="true"
+                aria-controls="research-sub"
+                aria-label="Research sections"
+              >
+                <svg viewBox="0 0 12 8" aria-hidden="true">
+                  <path d="M1 1.5 L6 6.5 L11 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+            <div class="nav-sub" id="research-sub">
+              {item.children.map((child) => (
+                <a href={child.href} aria-current={current(child.href) ? 'page' : undefined}>{child.label}</a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a href={item.href} aria-current={current(item.href) ? 'page' : undefined}>{item.label}</a>
+        )
+      )}
+      <a class="btn btn-gold" href="/contact/">Invite me</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('#site-nav');
+  const submenu = document.querySelector('.has-sub');
+  const caret = document.querySelector('.nav-caret');
+
+  toggle?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+
+  caret?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const collapsed = submenu?.classList.toggle('is-collapsed');
+    caret.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+  });
+</script>

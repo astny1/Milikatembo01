@@ -1,0 +1,59 @@
+---
+import CoverPhoto from './CoverPhoto.astro';
+
+interface Props {
+  title: string;
+  eventName: string;
+  dateLabel: string;
+  location: string;
+  role: string;
+  summary: string;
+  link?: string;
+  linkLabel?: string;
+  image?: string;
+}
+
+const {
+  title,
+  eventName,
+  dateLabel,
+  location,
+  role,
+  summary,
+  link,
+  linkLabel,
+  image = '/images/portrait-event.jpg',
+} = Astro.props;
+---
+
+<section class="section conference cover-band" aria-labelledby="conference-heading">
+  <CoverPhoto src={image} position="50% 20%" />
+  <div class="conference-grid">
+    <div>
+      <p class="kicker">Upcoming conference engagement</p>
+      <h2 id="conference-heading">{eventName}</h2>
+      <div class="meta-row">
+        <span class="chip">{dateLabel}</span>
+        <span class="chip">{location}</span>
+        <span class="chip">{role}</span>
+      </div>
+      <p>{summary}</p>
+      <div class="hero-actions">
+        {link && (
+          <a class="btn btn-gold" href={link} rel="noopener">
+            {linkLabel || 'View Conference Abstract'}
+          </a>
+        )}
+        <a class="btn btn-light" href="/events/">View all events</a>
+      </div>
+    </div>
+    <dl class="panel">
+      <dt>Presentation</dt>
+      <dd>{title}</dd>
+      <dt>Programme role</dt>
+      <dd>{role}</dd>
+      <dt>Place</dt>
+      <dd>{location}</dd>
+    </dl>
+  </div>
+</section>

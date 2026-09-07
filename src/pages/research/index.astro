@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const areas = [
+  {
+    href: '/research/doctoral/',
+    label: 'Doctoral Project',
+    text: 'Doctoral research at the University of Zambia exploring bibliotherapy as a mental-health counselling intervention among university students.',
+  },
+  {
+    href: '/research/book/',
+    label: 'Book Project',
+    text: 'Coming soon.',
+  },
+  {
+    href: '/research/publications/',
+    label: 'Publications',
+    text: 'Coming soon.',
+  },
+  {
+    href: '/research/conferences/',
+    label: 'Conferences',
+    text: 'Forthcoming and past conference papers.',
+  },
+];
+---
+
+<BaseLayout
+  title="Research"
+  description="Doctoral project, book project, publications and conferences by Milika Tembo on bibliotherapy in Zambia."
+>
+  <header class="page-hero research-hero">
+    <div class="wrap">
+      <h1>Research</h1>
+      <p class="page-sub">Doctoral work, writing and conferences</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap research-areas">
+      {areas.map((area) => (
+        <a class="research-area-card" href={area.href}>
+          <h2>{area.label}</h2>
+          <p>{area.text}</p>
+          <span>View page</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  category: string;
+  dateLabel: string;
+  image?: string;
+}
+
+const { title, description, href, category, dateLabel, image } = Astro.props;
+const photo = image || '/images/portrait-studio.jpg';
+---
+
+<article class="blog-tile">
+  <p class="blog-tile-tag"><span></span>{category}</p>
+  <div class="blog-tile-media">
+    <img src={photo} alt="" width="640" height="400" />
+  </div>
+  <div class="blog-tile-body">
+    <h3>{title}</h3>
+    <p>{description}</p>
+  </div>
+  <div class="blog-tile-foot">
+    <span>{dateLabel}</span>
+    <a class="btn btn-gold" href={href}>Read more</a>
+  </div>
+</article>

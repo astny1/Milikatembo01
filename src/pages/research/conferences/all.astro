@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { eventTableDate, splitConferencePapers } from '../../../lib/events';
+
+const { papers } = splitConferencePapers(await getCollection('events'));
+---
+
+<BaseLayout
+  title="All conference papers"
+  description="A simple list of forthcoming and past conference papers by Milika Tembo."
+>
+  <header class="page-hero research-hero">
+    <div class="wrap">
+      <h1>All conference papers</h1>
+      <p class="page-sub">Title, date, conference, location and link.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+      {papers.length === 0 ? (
+        <p class="page-sub">Coming soon.</p>
+      ) : (
+        <div class="event-table-wrap">
+          <table class="event-table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Date</th>
+                <th scope="col">Conference</th>
+                <th scope="col">Location</th>
+                <th scope="col">Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              {papers.map((event) => (
+                <tr>
+                  <td>{event.data.title}</td>
+                  <td>{eventTableDate(event)}</td>
+                  <td>{event.data.eventName}</td>
+                  <td>{event.data.location}</td>
+                  <td>
+                    {event.data.link ? (
+                      <a href={event.data.link} rel="noopener">
+                        {event.data.linkLabel || 'View'}
+                      </a>
+                    ) : (
+                      '—'
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <p class="event-archive-back">
+        <a class="btn btn-outline" href="/research/conferences/">Back to conferences</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

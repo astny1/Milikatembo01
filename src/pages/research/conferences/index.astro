@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { formatRange } from '../../../lib/dates';
+import { eventPhoto, splitConferencePapers } from '../../../lib/events';
+
+const { featured, hasMore } = splitConferencePapers(await getCollection('events'));
+
+const listed = await Promise.all(
+  featured.map(async (event) => {
+    const rendered = event.body?.trim() ? await event.render() : null;
+    return { event, More: rendered?.Content };
+  })
+);
+---
+
+<BaseLayout
+  title="Conferences"
+  description="Forthcoming and past conference papers by Milika Tembo."
+>
+  <header class="page-hero research-hero">
+    <div class="wrap">
+      <h1>Conferences</h1>
+      <p class="page-sub">Forthcoming and past conference papers.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+      {listed.length === 0 ? (
+        <p class="page-sub">Coming soon.</p>
+      ) : (
+        <>
+          <div class="paper-list">
+            {listed.map(({ event, More }) => (
+              <article class="paper-card">
+                <div class="paper-card-top">
+                  <img src={eventPhoto(event)} alt="" width="148" height="118" />
+                  <div class="paper-card-copy">
+                    <p class="category">{formatRange(event.data.date, event.data.endDate)}</p>
+                    <h3>{event.data.title}</h3>
+                    <p class="paper-card-meta">{event.data.eventName} · {event.data.location}</p>
+                    <p class="paper-card-summary">{event.data.summary}</p>
+                    {event.data.link && (
+                      <a class="paper-card-link paper-card-link-desk" href={event.data.link} rel="noopener">
+                        {event.data.linkLabel || 'Visit the conference website'}
+                      </a>
+                    )}
+                  </div>
+                </div>
+                <div class="paper-card-foot">
+                  {More && (
+                    <details class="paper-more">
+                      <summary>Read more</summary>
+                      <div class="paper-more-body">
+                        <More />
+                      </div>
+                    </details>
+                  )}
+                  {event.data.link && (
+                    <a class="paper-card-link paper-card-link-mobile" href={event.data.link} rel="noopener">
+                      {event.data.linkLabel || 'Visit the conference website'}
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+          {hasMore && (
+            <div class="event-see-all">
+              <a class="btn btn-teal" href="/research/conferences/all/">See all</a>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  </section>
+</BaseLayout>

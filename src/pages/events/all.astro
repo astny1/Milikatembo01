@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { isUpcoming } from '../../lib/dates';
+import { eventIsoEnd, eventTableDate, splitEvents } from '../../lib/events';
+
+const events = (await getCollection('events')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const { past } = splitEvents(events);
+---
+
+<BaseLayout
+  title="All events"
+  description="A full list of conferences, lectures and other appearances by Milika Tembo."
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <p class="kicker">Events</p>
+      <h1>All appearances</h1>
+      <p>Every confirmed lecture, conference and workshop, listed by date. When an upcoming date passes, it joins this table.</p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="wrap">
+      <p class="event-archive-count" id="archive-count">
+        {past.length} past {past.length === 1 ? 'appearance' : 'appearances'}
+      </p>
+      <div class="event-table-wrap">
+        <table class="event-table">
+          <thead>
+            <tr>
+              <th scope="col">Event name</th>
+              <th scope="col">Title</th>
+              <th scope="col">Date</th>
+              <th scope="col">Location</th>
+            </tr>
+          </thead>
+          <tbody id="past-table-body">
+            {events.map((event) => (
+              <tr
+                data-event-id={event.slug}
+                data-end={eventIsoEnd(event)}
+                hidden={isUpcoming(event.data.date, event.data.endDate)}
+              >
+                <td>{event.data.eventName}</td>
+                <td>{event.data.title}</td>
+                <td>{eventTableDate(event)}</td>
+                <td>{event.data.location}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="event-archive-back">
+        <a class="btn btn-outline" href="/events/">Back to events</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  function stillUpcoming(el: Element) {
+    const end = el.getAttribute('data-end');
+    if (!end) return false;
+    const date = new Date(end);
+    date.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date.getTime() >= today.getTime();
+  }
+
+  const rows = [...document.querySelectorAll<HTMLTableRowElement>('#past-table-body tr')];
+  let visible = 0;
+  rows.forEach((row) => {
+    const past = !stillUpcoming(row);
+    row.hidden = !past;
+    if (past) visible += 1;
+  });
+
+  const count = document.getElementById('archive-count');
+  if (count) {
+    count.textContent = `${visible} past ${visible === 1 ? 'appearance' : 'appearances'}`;
+  }
+</script>

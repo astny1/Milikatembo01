@@ -1,0 +1,171 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: public/uploads
+public_folder: /uploads
+
+site_url: https://milikatembobibliotherapy.netlify.app
+display_url: https://milikatembobibliotherapy.netlify.app
+logo_url: /images/portrait-studio.jpg
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: blog
+    label: Blog
+    label_singular: Post
+    description: Articles on the Blog page and in Recent posts on the homepage.
+    folder: src/content/blog
+    create: true
+    delete: true
+    slug: '{{year}}-{{month}}-{{slug}}'
+    preview_path: 'blog/{{slug}}/'
+    sortable_fields: ['pubDate', 'title', 'category']
+    view_filters:
+      - label: Bibliotherapy
+        field: category
+        pattern: Bibliotherapy
+      - label: Libraries
+        field: category
+        pattern: Libraries
+      - label: Literature
+        field: category
+        pattern: Literature
+      - label: Wellbeing
+        field: category
+        pattern: Wellbeing
+      - label: Research
+        field: category
+        pattern: Research
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text, hint: Short summary for listings and search engines. }
+      - { label: Publish date, name: pubDate, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - label: Category
+        name: category
+        widget: select
+        options: [Bibliotherapy, Libraries, Literature, Wellbeing, Research]
+      - { label: Image, name: image, widget: image, required: false, hint: Shown on the Blog and Recent posts cards. A landscape photo works best; it is cropped and centred in the card. }
+      - { label: Draft, name: draft, widget: boolean, default: false, hint: Hide this post from the public site until it is ready. }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: events
+    label: Events
+    label_singular: Event
+    description: Lectures, workshops and talks on the Events page. Upcoming items move to Past automatically after the end date. Conference items also appear under Research → Conferences.
+    folder: src/content/events
+    create: true
+    delete: true
+    slug: '{{year}}-{{slug}}'
+    preview_path: 'events/'
+    sortable_fields: ['date', 'title', 'type']
+    view_filters:
+      - label: Conference
+        field: type
+        pattern: Conference
+      - label: Lecture
+        field: type
+        pattern: Lecture
+      - label: Workshop
+        field: type
+        pattern: Workshop
+    fields:
+      - { label: Title, name: title, widget: string, hint: The paper, talk or session title. }
+      - { label: Event name, name: eventName, widget: string }
+      - { label: Start date, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - { label: End date, name: endDate, widget: datetime, date_format: YYYY-MM-DD, time_format: false, required: false, hint: After this date the event moves to Past. If empty, the start date is used. }
+      - { label: Location, name: location, widget: string }
+      - label: Role
+        name: role
+        widget: select
+        options: ['Presenter', 'Session chair', 'Presenter and session chair', 'Invited speaker', 'Participant']
+      - label: Type
+        name: type
+        widget: select
+        options: [Conference, Lecture, Workshop, Seminar, Media, Other]
+        hint: Choose Conference to list this on the Research → Conferences page as well.
+      - { label: Feature on homepage, name: featured, widget: boolean, default: false, hint: Use this for the next major upcoming appearance. }
+      - { label: Photo, name: image, widget: image, required: false, hint: Shown on the right of the Events card. }
+      - { label: Link, name: link, widget: string, required: false }
+      - { label: Link label, name: linkLabel, widget: string, required: false, default: 'View details' }
+      - { label: Short summary, name: summary, widget: text }
+      - { label: Further notes, name: body, widget: markdown, required: false }
+
+  - name: doctoral
+    label: Doctoral project
+    description: Optional source link for Research → Doctoral Project. If you add a URL, the page shows a View research button. If you leave it empty, the button stays hidden.
+    files:
+      - label: Doctoral project
+        name: doctoral
+        file: src/data/doctoral.json
+        fields:
+          - { label: Research link, name: link, widget: string, required: false, hint: Full URL to the thesis, repository or other source. Leave empty to hide the View research button. }
+
+  - name: book
+    label: Book project
+    label_singular: Book item
+    description: Cards on Research → Book Project. The page says Coming soon until you add an item.
+    folder: src/content/book
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    preview_path: 'research/book/'
+    sortable_fields: ['order', 'title']
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Line under title, name: meta, widget: string, required: false }
+      - { label: Order, name: order, widget: number, value_type: int, default: 1 }
+      - { label: Summary, name: summary, widget: text }
+      - { label: Link, name: link, widget: string, required: false }
+      - { label: Link label, name: linkLabel, widget: string, required: false }
+
+  - name: publications
+    label: Publications
+    label_singular: Publication
+    description: Cards on Research → Publications. The page says Coming soon until you add an item.
+    folder: src/content/publications
+    create: true
+    delete: true
+    slug: '{{year}}-{{slug}}'
+    preview_path: 'research/publications/'
+    sortable_fields: ['year', 'title']
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Authors, name: authors, widget: string, default: 'Milika Tembo' }
+      - { label: Year, name: year, widget: number, value_type: int }
+      - label: Type
+        name: type
+        widget: select
+        options: ['Journal article', 'Book chapter', 'Conference abstract', 'Working paper', 'Other']
+      - { label: Venue, name: venue, widget: string, hint: Journal, book, conference or publisher. }
+      - { label: Link, name: link, widget: string, required: false }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Short summary, name: summary, widget: text }
+      - { label: Abstract or note, name: body, widget: markdown, required: false }
+
+  - name: settings
+    label: Site settings
+    description: Name, email, social profiles and portrait used across the site.
+    files:
+      - label: Contact and profiles
+        name: site
+        file: src/data/site.json
+        fields:
+          - { label: Display name, name: name, widget: string }
+          - { label: Qualifications line, name: credentials, widget: string, hint: Shown under the name in the footer. }
+          - { label: Role line, name: role, widget: string }
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Public email, name: email, widget: string }
+          - { label: Location, name: location, widget: string }
+          - { label: Affiliation, name: affiliation, widget: string }
+          - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
+          - { label: ORCID URL, name: orcid, widget: string, required: false, hint: Full URL, for example https://orcid.org/0000-0000-0000-0000 }
+          - { label: ResearchGate URL, name: researchgate, widget: string, required: false }
+          - { label: X / Twitter URL, name: twitter, widget: string, required: false }
+          - { label: Facebook URL, name: facebook, widget: string, required: false }
+          - { label: Portrait image, name: portrait, widget: image, required: false }
