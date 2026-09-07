@@ -939,24 +939,12 @@ a:hover {
 
 .home-quote-band h2 {
   font-family: var(--serif);
-  font-size: clamp(1.7rem, 3.5vw, 2.5rem);
-  line-height: 1.18;
+  font-size: clamp(1.15rem, 2.6vw, 2.15rem);
+  line-height: 1.2;
   letter-spacing: -0.015em;
   color: var(--white);
   margin: 0 auto 0.9rem;
-  overflow-wrap: break-word;
-}
-
-.home-feature-break {
-  display: block;
-}
-
-.home-feature-break-soft {
-  display: inline;
-}
-
-.home-feature-break-soft::before {
-  content: " ";
+  white-space: nowrap;
 }
 
 .home-quote-text,
@@ -1013,17 +1001,10 @@ a:hover {
   }
 
   .home-quote-band h2 {
-    font-size: clamp(1.4rem, 5.8vw, 1.85rem);
-    line-height: 1.22;
+    font-size: clamp(0.92rem, 4.2vw, 1.35rem);
+    line-height: 1.2;
     margin-bottom: 0.7rem;
-  }
-
-  .home-feature-break-soft {
-    display: block;
-  }
-
-  .home-feature-break-soft::before {
-    content: none;
+    white-space: nowrap;
   }
 
   .home-quote-text,
@@ -1055,8 +1036,9 @@ a:hover {
 
   .home-quote-band .home-actions,
   .home-quote-band .home-center-actions {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
     gap: 0.5rem;
     margin-top: 0;
@@ -1064,11 +1046,11 @@ a:hover {
 
   .home-quote-band .home-actions .btn,
   .home-quote-band .home-center-actions .btn {
-    width: 100%;
+    width: auto;
     min-width: 0;
-    min-height: 42px;
-    padding: 0.55rem 1rem;
-    font-size: 0.7rem;
+    min-height: 38px;
+    padding: 0.5rem 0.95rem;
+    font-size: 0.64rem;
   }
 }
 
@@ -2991,19 +2973,21 @@ textarea { min-height: 150px; resize: vertical; }
 
   .home-quote-band .home-actions,
   .home-quote-band .home-center-actions {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     margin-top: 0;
   }
 
   .home-quote-band .home-actions .btn,
   .home-quote-band .home-center-actions .btn {
-    width: 100%;
+    width: auto;
     min-width: 0;
-    min-height: 42px;
-    padding: 0.55rem 1rem;
-    font-size: 0.7rem;
+    min-height: 38px;
+    padding: 0.5rem 0.95rem;
+    font-size: 0.64rem;
   }
 
   .home-shots { gap: 0.35rem; }

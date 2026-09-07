@@ -185,29 +185,7 @@ const homeEvents = (await getCollection('events')).map((event) => ({
         var summary = document.getElementById('home-feature-summary');
         var meta = document.getElementById('home-feature-meta');
         var link = document.getElementById('home-feature-link');
-        if (title) {
-          var name = pick.eventName || '';
-          title.textContent = '';
-          if (/\sConference$/.test(name)) {
-            var head = name.replace(/\sConference$/, '');
-            var european = head.match(/^(3rd European)\s(.+)$/);
-            if (european) {
-              title.appendChild(document.createTextNode(european[1]));
-              var mid = document.createElement('span');
-              mid.className = 'home-feature-break home-feature-break-soft';
-              mid.textContent = european[2];
-              title.appendChild(mid);
-            } else {
-              title.appendChild(document.createTextNode(head));
-            }
-            var line = document.createElement('span');
-            line.className = 'home-feature-break';
-            line.textContent = 'Conference';
-            title.appendChild(line);
-          } else {
-            title.textContent = name;
-          }
-        }
+        if (title) title.textContent = pick.eventName || '';
         if (summary) {
           var copy = pick.summary || '';
           var sentences = copy.split(/(?<=\.)\s+/);
