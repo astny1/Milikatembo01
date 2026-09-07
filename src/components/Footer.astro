@@ -1,8 +1,8 @@
 ---
 import site from '../data/site.json';
 
-const sent = Astro.url.searchParams.get('footer') === 'sent';
-const action = `${Astro.url.pathname}${Astro.url.pathname.endsWith('/') ? '' : '/'}?footer=sent`;
+const sent = Astro.url.pathname.replace(/\/+$/, '') === '/sent';
+const action = '/sent/';
 
 const linkedin = 'https://www.linkedin.com/in/milika-tembo-0b277b122';
 
@@ -79,43 +79,43 @@ const social = [
     </div>
 
     <div class="footer-form-wrap">
-      {sent ? (
-        <p class="footer-sent" role="status">Thank you. Your note has been received.</p>
-      ) : (
-        <form
-          class="footer-form"
-          name="footer-enquiry"
-          method="POST"
-          action={action}
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-        >
-          <input type="hidden" name="form-name" value="footer-enquiry" />
-          <input type="hidden" name="subject" value="New footer note — Milika Tembo" />
-          <input type="hidden" name="enquiry-type" value="Footer note" />
-          <p class="honeypot">
-            <label>
-              Do not fill this field
-              <input name="bot-field" tabindex="-1" autocomplete="off" />
-            </label>
-          </p>
-          <div class="footer-form-row">
-            <label>
-              Name
-              <input type="text" name="name" autocomplete="name" required />
-            </label>
-            <label>
-              Email
-              <input type="email" name="email" autocomplete="email" required />
-            </label>
-          </div>
-          <label>
-            Message
-            <textarea name="message" rows="3" required placeholder="A few lines are enough."></textarea>
-          </label>
-          <button class="btn btn-gold" type="submit">Send note</button>
-        </form>
+      {sent && (
+        <p class="footer-sent" role="status">Thank you for your submission. We will respond to you within 24 hours.</p>
       )}
+      <form
+        class="footer-form"
+        name="footer-enquiry"
+        method="POST"
+        action={action}
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        hidden={sent}
+      >
+        <input type="hidden" name="form-name" value="footer-enquiry" />
+        <input type="hidden" name="subject" value="New footer note — Milika Tembo" />
+        <input type="hidden" name="enquiry-type" value="Footer note" />
+        <p class="honeypot">
+          <label>
+            Do not fill this field
+            <input name="bot-field" tabindex="-1" autocomplete="off" />
+          </label>
+        </p>
+        <div class="footer-form-row">
+          <label>
+            Name
+            <input type="text" name="name" autocomplete="name" required />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+        </div>
+        <label>
+          Message
+          <textarea name="message" rows="3" required placeholder="A few lines are enough."></textarea>
+        </label>
+        <button class="btn btn-gold" type="submit">Send note</button>
+      </form>
     </div>
   </div>
 

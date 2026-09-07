@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Message sent"
+  description="Thank you for your submission. We will respond to you within 24 hours."
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+  </Fragment>
+  <header class="page-hero">
+    <div class="wrap">
+      <p class="kicker">Note sent</p>
+      <h1>Thank you for your submission</h1>
+      <p>We will respond to you within 24 hours.</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="/">Home</a>
+      </div>
+    </div>
+  </header>
+</BaseLayout>
