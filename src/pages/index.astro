@@ -139,8 +139,8 @@ const homeEvents = (await getCollection('events')).map((event) => ({
       <div id="home-feature-event" hidden>
         <p class="home-kicker">Upcoming engagement</p>
         <h2 id="feature-heading"></h2>
-        <p class="home-quote-text" id="home-feature-summary"></p>
-        <p id="home-feature-meta"></p>
+        <p class="home-feature-copy" id="home-feature-summary"></p>
+        <p class="home-feature-meta" id="home-feature-meta"></p>
         <div class="home-actions home-center-actions">
           <a class="btn btn-gold" id="home-feature-link" href="#" rel="noopener" hidden></a>
           <a class="btn btn-light" href="/events/">View all events</a>
@@ -185,8 +185,37 @@ const homeEvents = (await getCollection('events')).map((event) => ({
         var summary = document.getElementById('home-feature-summary');
         var meta = document.getElementById('home-feature-meta');
         var link = document.getElementById('home-feature-link');
-        if (title) title.textContent = pick.eventName || '';
-        if (summary) summary.textContent = pick.summary ? '“' + pick.summary + '”' : '';
+        if (title) {
+          var name = pick.eventName || '';
+          title.textContent = '';
+          if (/\sConference$/.test(name)) {
+            title.appendChild(document.createTextNode(name.replace(/\sConference$/, '')));
+            var line = document.createElement('span');
+            line.className = 'home-feature-break';
+            line.textContent = 'Conference';
+            title.appendChild(line);
+          } else {
+            title.textContent = name;
+          }
+        }
+        if (summary) {
+          var copy = pick.summary || '';
+          var sentences = copy.split(/(?<=\.)\s+/);
+          summary.textContent = '';
+          sentences.forEach(function (sentence, index) {
+            if (index) summary.appendChild(document.createElement('br'));
+            var parts = sentence.split('Hope beyond Grief');
+            if (parts.length === 2) {
+              summary.appendChild(document.createTextNode(parts[0]));
+              var session = document.createElement('em');
+              session.textContent = 'Hope beyond Grief';
+              summary.appendChild(session);
+              summary.appendChild(document.createTextNode(parts[1]));
+            } else {
+              summary.appendChild(document.createTextNode(sentence));
+            }
+          });
+        }
         if (meta) meta.textContent = [pick.when, pick.location, pick.role].filter(Boolean).join(' · ');
         if (link) {
           if (pick.link) {

@@ -924,7 +924,7 @@ a:hover {
 .home-quote-inner {
   position: relative;
   z-index: 2;
-  width: min(calc(100% - 2rem), 760px);
+  width: min(calc(100% - 2.4rem), 38rem);
 }
 
 .home-quote-band .home-kicker,
@@ -933,19 +933,46 @@ a:hover {
   color: var(--cream);
 }
 
-.home-quote-band h2 {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 4.4vw, 3rem);
-  color: var(--white);
-  margin: 0 0 1rem;
+.home-quote-band .home-kicker {
+  margin-bottom: 0.85rem;
 }
 
-.home-quote-text {
+.home-quote-band h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  color: var(--white);
+  margin: 0 auto 0.9rem;
+}
+
+.home-feature-break {
+  display: block;
+}
+
+.home-quote-text,
+.home-feature-copy {
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
-  line-height: 1.45;
-  margin: 0 0 1rem;
+  font-size: clamp(1.05rem, 1.9vw, 1.22rem);
+  line-height: 1.55;
+  max-width: 32rem;
+  margin: 0 auto 0.9rem;
+}
+
+.home-feature-copy em {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.home-feature-meta {
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  opacity: 0.86;
+  margin: 0 auto 1.35rem;
 }
 
 .home-quote-band .home-kicker::before {
@@ -954,6 +981,11 @@ a:hover {
 
 .home-quote-band .home-actions {
   justify-content: center;
+  gap: 0.65rem;
+}
+
+.home-quote-band .home-actions .btn {
+  min-width: 10.5rem;
 }
 
 @keyframes heroZoom {

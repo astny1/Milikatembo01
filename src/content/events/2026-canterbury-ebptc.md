@@ -9,8 +9,8 @@ type: Conference
 featured: true
 image: /images/portrait-speaking.jpg
 link: https://www.3ebptc.co.uk/abstracts
-linkLabel: View conference abstract
-summary: I will be chairing a parallel session 'Hope beyond Grief' on 1st October; and presenting the Conference Paper on 2nd October.
+linkLabel: View abstract
+summary: I will chair the parallel session Hope beyond Grief on 1 October. I will present the conference paper on 2 October.
 ---
 
-I will be chairing a parallel session 'Hope beyond Grief' on 1st October; and presenting the Conference Paper on 2nd October.
+I will chair the parallel session Hope beyond Grief on 1 October. I will present the conference paper on 2 October.
