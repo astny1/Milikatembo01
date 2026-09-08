@@ -37,6 +37,9 @@
   }
 
   function render() {
+    document.querySelectorAll('[data-welcome-time]').forEach(function (el) {
+      el.textContent = stamp();
+    });
     document.querySelectorAll('a[href]').forEach(function (link) {
       if (isSiteLink(link) || link.classList.contains('admin-welcome-link')) {
         decorate(link);

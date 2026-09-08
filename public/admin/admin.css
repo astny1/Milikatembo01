@@ -12,43 +12,57 @@ img[src*="portrait-studio"] {
   height: 160px !important;
 }
 
+.admin-chrome {
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 56px;
+  padding: 0.45rem 1rem;
+  background: #0e3d3a;
+}
+
+.admin-welcome {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.admin-welcome-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+}
+
+.admin-welcome-time {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #d8c39a;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+}
+
 .account-launch {
-  position: fixed;
-  top: 1rem;
-  right: 5.5rem;
-  z-index: 1000;
+  flex: 0 0 auto;
   border: 0;
   border-radius: 999px;
-  padding: 0.55rem 1rem;
-  background: #0e3d3a;
-  color: #fff;
+  padding: 0.55rem 1.05rem;
+  background: #c4a35a;
+  color: #12201e;
   font: 600 0.85rem/1 "Source Sans 3", "Segoe UI", sans-serif;
   cursor: pointer;
 }
 
-.admin-welcome-link {
-  display: flex !important;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 0.12rem;
-  max-width: 16.5rem;
-  padding: 0.35rem 0.85rem !important;
-  white-space: normal !important;
-  text-decoration: none !important;
-  line-height: 1.2;
+#nc-root {
+  min-height: calc(100vh - 56px);
 }
 
-.admin-welcome-name {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #0e3d3a;
-}
-
-.admin-welcome-time {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: #5b6668;
+#nc-root a.admin-welcome-link {
+  display: none !important;
 }
 
 .account-panel {
@@ -133,7 +147,7 @@ img[src*="portrait-studio"] {
 .account-overlay {
   position: fixed;
   inset: 0;
-  z-index: 2000;
+  z-index: 4000;
   display: none;
   place-items: center;
   padding: 1.5rem;
@@ -206,7 +220,7 @@ html[data-theme="night"] #nc-root canvas {
 }
 
 html[data-theme="night"] .account-launch {
-  background: #c4a35a;
+  background: #f4efe6;
   color: #12201e;
 }
 

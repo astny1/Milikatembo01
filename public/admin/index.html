@@ -14,6 +14,17 @@
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
+    <header class="admin-chrome">
+      <div class="admin-welcome">
+        <span class="admin-welcome-name">Welcome back, Milika Tembo</span>
+        <span class="admin-welcome-time" data-welcome-time></span>
+      </div>
+      <button type="button" class="account-launch" id="account-launch">Account settings</button>
+    </header>
+    <div id="nc-root"></div>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
     <script src="https://unpkg.com/decap-cms@^3.6.2/dist/decap-cms.js"></script>
     <script src="/admin/account.js"></script>
     <script src="/admin/editor-actions.js"></script>

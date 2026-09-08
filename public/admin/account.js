@@ -194,7 +194,7 @@
 
     CMS.registerAdditionalLink({
       id: 'account',
-      title: 'Account',
+      title: 'Account settings',
       data: AccountPage,
     });
     return true;
@@ -242,54 +242,66 @@
   }
 
   function addAccountButton() {
-    if (document.querySelector('.account-launch')) return;
+    var launch = document.getElementById('account-launch') || document.querySelector('.account-launch');
+    if (!launch) {
+      launch = document.createElement('button');
+      launch.type = 'button';
+      launch.className = 'account-launch';
+      launch.id = 'account-launch';
+      launch.textContent = 'Account settings';
+      document.body.appendChild(launch);
+    }
+    if (launch.dataset.bound === '1') return;
+    launch.dataset.bound = '1';
+    launch.textContent = 'Account settings';
+
+    var overlay = document.querySelector('.account-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'account-overlay';
+      overlay.innerHTML =
+        '<div class="account-overlay-card">' +
+          '<button type="button" class="account-close" aria-label="Close">&times;</button>' +
+          '<h2>Account settings</h2>' +
+          '<p class="account-lead" data-account-email></p>' +
+          '<p hidden data-account-note></p>' +
+          '<section class="account-card">' +
+            '<h2>Appearance</h2>' +
+            '<p>Choose day or night for the admin panel. This is saved on this browser.</p>' +
+            '<div class="theme-switch">' +
+              '<button type="button" class="theme-choice" data-theme-choice="day">Day</button>' +
+              '<button type="button" class="theme-choice" data-theme-choice="night">Night</button>' +
+            '</div>' +
+          '</section>' +
+          '<section class="account-card">' +
+            '<h2>Login email</h2>' +
+            '<p>This is the email used to open the admin panel.</p>' +
+            '<form data-account-email-form>' +
+              '<label>New email<input type="email" name="email" autocomplete="email" required></label>' +
+              '<button type="submit" class="account-btn">Update email</button>' +
+            '</form>' +
+          '</section>' +
+          '<section class="account-card">' +
+            '<h2>Password</h2>' +
+            '<p>Choose a new password for this login.</p>' +
+            '<form data-account-password-form>' +
+              '<label>New password<input type="password" name="password" autocomplete="new-password" required minlength="8"></label>' +
+              '<label>Confirm password<input type="password" name="confirm" autocomplete="new-password" required minlength="8"></label>' +
+              '<button type="submit" class="account-btn">Update password</button>' +
+            '</form>' +
+          '</section>' +
+        '</div>';
+      document.body.appendChild(overlay);
+    }
 
     var current = user();
-    var overlay = document.createElement('div');
-    overlay.className = 'account-overlay';
-    overlay.innerHTML =
-      '<div class="account-overlay-card">' +
-        '<button type="button" class="account-close" aria-label="Close">&times;</button>' +
-        '<h2>Account</h2>' +
-        '<p class="account-lead" data-account-email></p>' +
-        '<p hidden data-account-note></p>' +
-        '<section class="account-card">' +
-          '<h2>Appearance</h2>' +
-          '<p>Choose day or night for the admin panel. This is saved on this browser.</p>' +
-          '<div class="theme-switch">' +
-            '<button type="button" class="theme-choice" data-theme-choice="day">Day</button>' +
-            '<button type="button" class="theme-choice" data-theme-choice="night">Night</button>' +
-          '</div>' +
-        '</section>' +
-        '<section class="account-card">' +
-          '<h2>Login email</h2>' +
-          '<p>This is the email used to open the admin panel.</p>' +
-          '<form data-account-email-form>' +
-            '<label>New email<input type="email" name="email" autocomplete="email" required></label>' +
-            '<button type="submit" class="account-btn">Update email</button>' +
-          '</form>' +
-        '</section>' +
-        '<section class="account-card">' +
-          '<h2>Password</h2>' +
-          '<p>Choose a new password for this login.</p>' +
-          '<form data-account-password-form>' +
-            '<label>New password<input type="password" name="password" autocomplete="new-password" required minlength="8"></label>' +
-            '<label>Confirm password<input type="password" name="confirm" autocomplete="new-password" required minlength="8"></label>' +
-            '<button type="submit" class="account-btn">Update password</button>' +
-          '</form>' +
-        '</section>' +
-      '</div>';
-
-    var launch = document.createElement('button');
-    launch.type = 'button';
-    launch.className = 'account-launch';
-    launch.textContent = 'Account';
-
     var emailLine = overlay.querySelector('[data-account-email]');
     var note = overlay.querySelector('[data-account-note]');
-    emailLine.textContent = current
-      ? 'Signed in as ' + current.email + '.'
-      : 'Sign in with Netlify Identity on the published site to change the login email or password.';
+    if (emailLine) {
+      emailLine.textContent = current
+        ? 'Signed in as ' + current.email + '.'
+        : 'Sign in on the published site to change the login email or password.';
+    }
 
     launch.addEventListener('click', function () {
       overlay.classList.add('is-open');
@@ -304,7 +316,9 @@
     wireForm(overlay.querySelector('[data-account-email-form]'), note, function (currentUser, form) {
       var email = form.email.value.trim();
       return currentUser.update({ email: email }).then(function () {
-        emailLine.textContent = 'Signed in as ' + email + '. Confirm the new inbox to finish the change.';
+        if (emailLine) {
+          emailLine.textContent = 'Signed in as ' + email + '. Confirm the new inbox to finish the change.';
+        }
         return 'Check the new inbox and confirm the address. That email will become the login.';
       });
     });
@@ -327,13 +341,16 @@
       });
     });
     applyTheme(currentTheme());
-
-    document.body.appendChild(launch);
-    document.body.appendChild(overlay);
   }
 
-  if (!registerAccountPage()) {
-    window.addEventListener('load', registerAccountPage);
+  if (window.CMS) {
+    registerAccountPage();
+    if (window.CMS_MANUAL_INIT) CMS.init();
+  } else {
+    window.addEventListener('load', function () {
+      registerAccountPage();
+      if (window.CMS && window.CMS_MANUAL_INIT) CMS.init();
+    });
   }
 
   if (document.readyState === 'loading') {
