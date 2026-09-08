@@ -1,4 +1,22 @@
 (function () {
+  var THEME_KEY = 'milika-admin-theme';
+
+  function currentTheme() {
+    return localStorage.getItem(THEME_KEY) === 'night' ? 'night' : 'day';
+  }
+
+  function applyTheme(theme) {
+    var next = theme === 'night' ? 'night' : 'day';
+    localStorage.setItem(THEME_KEY, next);
+    document.documentElement.setAttribute('data-theme', next);
+    document.querySelectorAll('[data-theme-choice]').forEach(function (button) {
+      button.setAttribute('aria-pressed', button.getAttribute('data-theme-choice') === next ? 'true' : 'false');
+    });
+    return next;
+  }
+
+  applyTheme(currentTheme());
+
   function user() {
     return window.netlifyIdentity ? window.netlifyIdentity.currentUser() : null;
   }
@@ -18,6 +36,7 @@
           message: '',
           error: '',
           busy: false,
+          theme: currentTheme(),
         };
       },
       setField: function (name) {
@@ -86,8 +105,12 @@
       openIdentity: function () {
         if (window.netlifyIdentity) window.netlifyIdentity.open();
       },
+      setTheme: function (theme) {
+        this.setState({ theme: applyTheme(theme) });
+      },
       render: function () {
         var signedIn = Boolean(this.state.currentEmail);
+        var self = this;
         return h('div', { className: 'account-panel' },
           h('h1', {}, 'Account'),
           h('p', { className: 'account-lead' },
@@ -97,6 +120,26 @@
           ),
           this.state.message ? h('p', { className: 'account-ok' }, this.state.message) : null,
           this.state.error ? h('p', { className: 'account-error' }, this.state.error) : null,
+          h('section', { className: 'account-card' },
+            h('h2', {}, 'Appearance'),
+            h('p', {}, 'Choose day or night for the admin panel. This is saved on this browser.'),
+            h('div', { className: 'theme-switch' },
+              h('button', {
+                type: 'button',
+                className: 'theme-choice',
+                'data-theme-choice': 'day',
+                'aria-pressed': this.state.theme === 'day' ? 'true' : 'false',
+                onClick: function () { self.setTheme('day'); },
+              }, 'Day'),
+              h('button', {
+                type: 'button',
+                className: 'theme-choice',
+                'data-theme-choice': 'night',
+                'aria-pressed': this.state.theme === 'night' ? 'true' : 'false',
+                onClick: function () { self.setTheme('night'); },
+              }, 'Night')
+            )
+          ),
           h('section', { className: 'account-card' },
             h('h2', {}, 'Login email'),
             h('p', {}, 'This is the email used to open the admin panel.'),
@@ -211,6 +254,14 @@
         '<p class="account-lead" data-account-email></p>' +
         '<p hidden data-account-note></p>' +
         '<section class="account-card">' +
+          '<h2>Appearance</h2>' +
+          '<p>Choose day or night for the admin panel. This is saved on this browser.</p>' +
+          '<div class="theme-switch">' +
+            '<button type="button" class="theme-choice" data-theme-choice="day">Day</button>' +
+            '<button type="button" class="theme-choice" data-theme-choice="night">Night</button>' +
+          '</div>' +
+        '</section>' +
+        '<section class="account-card">' +
           '<h2>Login email</h2>' +
           '<p>This is the email used to open the admin panel.</p>' +
           '<form data-account-email-form>' +
@@ -269,6 +320,13 @@
         return 'Password updated. Use it the next time you sign in.';
       });
     });
+
+    overlay.querySelectorAll('[data-theme-choice]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        applyTheme(button.getAttribute('data-theme-choice'));
+      });
+    });
+    applyTheme(currentTheme());
 
     document.body.appendChild(launch);
     document.body.appendChild(overlay);

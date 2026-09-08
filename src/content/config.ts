@@ -57,6 +57,7 @@ const book = defineCollection({
     meta: z.string().optional(),
     order: z.number().default(1),
     summary: z.string(),
+    image: z.string().optional(),
     link: z.string().optional().or(z.literal('')),
     linkLabel: z.string().optional(),
   }),

@@ -19,7 +19,7 @@ collections:
   - name: blog
     label: Blog
     label_singular: Post
-    description: Articles on the Blog page and in Recent posts on the homepage.
+    description: Articles on the Blog page and in Recent posts on the homepage. You can update, create, duplicate or delete posts.
     folder: src/content/blog
     create: true
     delete: true
@@ -57,7 +57,7 @@ collections:
   - name: events
     label: Events
     label_singular: Event
-    description: Lectures, workshops and talks on the Events page. Upcoming items move to Past automatically after the end date. Conference items also appear under Research → Conferences.
+    description: Lectures, workshops, talks and conference details. Conference items also appear under Research → Conferences. You can update, create, duplicate or delete events.
     folder: src/content/events
     create: true
     delete: true
@@ -98,7 +98,8 @@ collections:
 
   - name: doctoral
     label: Doctoral project
-    description: Optional source link for Research → Doctoral Project. If you add a URL, the page shows a View research button. If you leave it empty, the button stays hidden.
+    description: Optional source link for Research → Doctoral Project. Save to update the View research button. This page is a single record, so it cannot be duplicated or deleted.
+    delete: false
     files:
       - label: Doctoral project
         name: doctoral
@@ -109,7 +110,7 @@ collections:
   - name: book
     label: Book project
     label_singular: Book item
-    description: Cards on Research → Book Project. The page says Coming soon until you add an item.
+    description: Cards on Research → Book Project. You can update, create, duplicate or delete book items.
     folder: src/content/book
     create: true
     delete: true
@@ -119,6 +120,7 @@ collections:
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Line under title, name: meta, widget: string, required: false }
+      - { label: Photo, name: image, widget: image, hint: 'Cover or photo for the card. A portrait (tall) photo works best; it is cropped and centred to a consistent size.' }
       - { label: Order, name: order, widget: number, value_type: int, default: 1 }
       - { label: Summary, name: summary, widget: text }
       - { label: Link, name: link, widget: string, required: false }
@@ -127,7 +129,7 @@ collections:
   - name: publications
     label: Publications
     label_singular: Publication
-    description: Cards on Research → Publications. The page says Coming soon until you add an item.
+    description: Cards on Research → Publications. You can update, create, duplicate or delete publications.
     folder: src/content/publications
     create: true
     delete: true
@@ -148,26 +150,3 @@ collections:
       - { label: Short summary, name: summary, widget: text }
       - { label: Abstract or note, name: body, widget: markdown, required: false }
 
-  - name: settings
-    label: Site settings
-    description: Name, email, social profiles and portrait used across the site.
-    files:
-      - label: Contact and profiles
-        name: site
-        file: src/data/site.json
-        fields:
-          - { label: Display name, name: name, widget: string }
-          - { label: Qualifications line, name: credentials, widget: string, hint: Shown under the name in the footer. }
-          - { label: Role line, name: role, widget: string }
-          - { label: Tagline, name: tagline, widget: string }
-          - { label: Public email, name: email, widget: string }
-          - { label: Location, name: location, widget: string }
-          - { label: Affiliation, name: affiliation, widget: string }
-          - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
-          - { label: ORCID URL, name: orcid, widget: string, required: false, hint: Full URL, for example https://orcid.org/0000-0000-0000-0000 }
-          - { label: ResearchGate URL, name: researchgate, widget: string, required: false }
-          - { label: X / Twitter URL, name: twitter, widget: string, required: false }
-          - { label: Facebook URL, name: facebook, widget: string, required: false }
-          - { label: Instagram URL, name: instagram, widget: string, required: false }
-          - { label: YouTube URL, name: youtube, widget: string, required: false }
-          - { label: Portrait image, name: portrait, widget: image, required: false }

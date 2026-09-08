@@ -136,3 +136,150 @@ img[src*="portrait-studio"] {
   line-height: 1;
   cursor: pointer;
 }
+
+.theme-switch {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.theme-choice {
+  flex: 1;
+  min-height: 42px;
+  border: 1px solid #cfc6b4;
+  border-radius: 999px;
+  background: #fff;
+  color: #0e3d3a;
+  font: 600 0.9rem/1 "Source Sans 3", "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+
+.theme-choice[aria-pressed="true"] {
+  background: #0e3d3a;
+  border-color: #0e3d3a;
+  color: #fff;
+}
+
+html[data-theme="night"] {
+  color-scheme: dark;
+  background: #101716;
+}
+
+html[data-theme="night"] body {
+  background: #101716;
+}
+
+html[data-theme="night"] #nc-root {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html[data-theme="night"] #nc-root img,
+html[data-theme="night"] #nc-root video,
+html[data-theme="night"] #nc-root iframe,
+html[data-theme="night"] #nc-root canvas {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html[data-theme="night"] .account-launch {
+  background: #c4a35a;
+  color: #12201e;
+}
+
+html[data-theme="night"] .account-overlay {
+  background: rgba(6, 14, 13, 0.72);
+}
+
+html[data-theme="night"] .account-overlay-card,
+html[data-theme="night"] .account-overlay .account-card {
+  background: #182624;
+  border-color: #314441;
+}
+
+html[data-theme="night"] .account-overlay h2,
+html[data-theme="night"] .account-close {
+  color: #f4efe6;
+}
+
+html[data-theme="night"] .account-overlay .account-lead,
+html[data-theme="night"] .account-overlay .account-card p {
+  color: #c9c3b8;
+}
+
+html[data-theme="night"] .account-overlay .account-card input {
+  background: #101716;
+  border-color: #3a4f4c;
+  color: #f4efe6;
+}
+
+html[data-theme="night"] .account-overlay .account-btn {
+  background: #c4a35a;
+  color: #12201e;
+}
+
+html[data-theme="night"] .account-overlay .account-ok {
+  color: #c4a35a;
+}
+
+html[data-theme="night"] .account-overlay .theme-choice {
+  background: #101716;
+  border-color: #3a4f4c;
+  color: #f4efe6;
+}
+
+html[data-theme="night"] .account-overlay .theme-choice[aria-pressed="true"] {
+  background: #c4a35a;
+  border-color: #c4a35a;
+  color: #12201e;
+}
+
+.editor-actions {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1600;
+  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.7rem 0.85rem;
+  background: #0e3d3a;
+}
+
+.editor-actions.is-open {
+  display: flex;
+}
+
+body.has-editor-actions {
+  padding-bottom: 4.4rem;
+}
+
+.editor-actions button {
+  min-height: 40px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 1.05rem;
+  background: #fff;
+  color: #0e3d3a;
+  font: 600 0.85rem/1 "Source Sans 3", "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+
+.editor-actions button.is-danger {
+  background: #8a3b32;
+  color: #fff;
+}
+
+html[data-theme="night"] .editor-actions {
+  background: #182624;
+}
+
+html[data-theme="night"] .editor-actions button {
+  background: #c4a35a;
+  color: #12201e;
+}
+
+html[data-theme="night"] .editor-actions button.is-danger {
+  background: #8a3b32;
+  color: #fff;
+}

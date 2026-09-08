@@ -22,7 +22,7 @@ Open http://localhost:4321/
 7. Site settings → **Forms**: after the first deploy you should see `speaking-enquiry` and `footer-enquiry`. Then go to **Project configuration → Notifications → Form submission notifications → Add notification**. Choose **Email**, enter **25milikat@gmail.com**, and apply it to both forms (or all forms). Netlify will email every new enquiry to that address. Confirm the Gmail inbox (and spam) after a test submit.
 8. Visit `https://your-site.netlify.app/admin/` to add blog posts, conferences, publications, ORCID, ResearchGate and a portrait. Use **Account** in the admin panel to change the login email or password.
 
-Change the public email in **Site settings** inside the CMS before sharing the site widely. Update `site` in `astro.config.mjs` when you attach a custom domain.
+Change the public email in `src/data/site.json` before sharing the site widely. Update `site` in `astro.config.mjs` when you attach a custom domain.
 
 ## What the administrator can update without code
 
@@ -33,6 +33,5 @@ Open `/admin/` after signing in. Each collection maps to a public section:
 - **Doctoral project** — Complete / Working on / Upcoming items on Research → Doctoral Project
 - **Book project** — the same status groups on Research → Book Project
 - **Publications** — abstracts and papers on Research → Publications, grouped by status
-- **Site settings** — name, email, location, LinkedIn, ORCID, ResearchGate, Facebook and portrait
 
 Mark one upcoming event as **Feature on homepage** to replace the Canterbury feature when that conference has passed.
