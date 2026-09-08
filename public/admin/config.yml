@@ -7,8 +7,8 @@ local_backend: true
 media_folder: public/uploads
 public_folder: /uploads
 
-site_url: https://milikatembobibliotherapy.netlify.app
-display_url: https://milikatembobibliotherapy.netlify.app
+site_url: https://www.milikatembo.com
+display_url: https://www.milikatembo.com
 logo_url: /images/portrait-studio.jpg
 
 slug:
