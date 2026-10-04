@@ -8,7 +8,6 @@ category: Bibliotherapy
 image: /uploads/whatsapp-image-2026-10-03-at-13.28.26.jpeg
 draft: false
 ---
-A Pilgrim in Canterbury
 I travelled to Canterbury carrying a question: what happens when people find comfort through books, but the practice has no shared map?
 On 1–2 October 2026, that question became my contribution to the 3rd European Biblio/Poetry Therapy Conference in Canterbury, England. My paper, “Pilgrims Without Maps: Bibliotherapy Without Construction in Unstructured Contexts,” brought a Zambian library perspective into an international conversation about reading, reflection, and wellbeing.
 Canterbury felt like a fitting place for that conversation. A beautiful historic city, with Canterbury Cathedral at its heart, it holds centuries of pilgrimage and storytelling. Walking through its streets, I thought about the journeys people make through books: looking for understanding, companionship, or words for something they cannot yet explain.
