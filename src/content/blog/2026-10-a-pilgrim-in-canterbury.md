@@ -5,6 +5,7 @@ description: "Reflections from the 3rd European Biblio/Poetry Therapy Conference
   finding inspiration for the journey ahead."
 pubDate: 2026-10-04
 category: Bibliotherapy
+image: /uploads/whatsapp-image-2026-10-03-at-13.28.26.jpeg
 draft: false
 ---
 A Pilgrim in Canterbury
